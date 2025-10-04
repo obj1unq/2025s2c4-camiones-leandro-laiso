@@ -28,6 +28,10 @@ object camion {
 			}
 	}
 
+	method cosasQueSuperanNivel(nivel) = cosas.filter({c => c.nivelPeligrosidad() > nivel})
+
+	method cosasMasPeligrosasQue(cosa) = self.cosasQueSuperanNivel(cosa.nivelPeligrosidad())
+
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
 			self.error(cosa.toString() + " ya está cargado en el camión. No se puede cargar")
