@@ -265,3 +265,29 @@ describe "Más cosas" {
         assert.equals(7.5, embalajeDeSeguridad.nivelPeligrosidad())
     }
 }
+
+describe "Tiene algo que pesa entre dos valores" {
+
+    // Camion cargado con Bumblebee y un paquete de 300 ladrillos
+    method initialize() {
+        camion.cargar(bumblebee)
+        paqueteLadrillos.cantLadrillos(300)
+        camion.cargar(paqueteLadrillos)
+    }
+
+    test "Tiene algo que pesa entre 5 y 700" {
+        assert.that(camion.tieneAlgoQuePesaEntre(5, 700))
+    }
+
+    test "Tiene algo que pesa entre 5 y 1000" {
+        assert.that(camion.tieneAlgoQuePesaEntre(5, 1000))
+    }
+
+    test "No tiene algo que pese entre 900 y 1000" {
+        assert.notThat(camion.tieneAlgoQuePesaEntre(900, 1000))
+    }
+
+    test "No tiene algo que pesa entre 1000 y 100 (intervalo invalido)" {
+        assert.notThat(camion.tieneAlgoQuePesaEntre(1000, 100))
+    }
+}

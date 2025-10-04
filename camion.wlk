@@ -34,6 +34,8 @@ object camion {
 
 	method puedeCircularEnRuta(nivel) = not self.estaExcedidoDePeso() && self.cosasQueSuperanNivel(nivel).isEmpty()
 
+	method tieneAlgoQuePesaEntre(minimo, maximo) = cosas.any({c =>  c.peso() >= minimo && c.peso() <= maximo})
+
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
 			self.error(cosa.toString() + " ya está cargado en el camión. No se puede cargar")
