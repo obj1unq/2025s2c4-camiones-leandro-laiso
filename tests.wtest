@@ -78,4 +78,32 @@ describe "Carga y descarga" {
     test "No se puede descargar algo no cargado" {
         assert.throwsException({camion.descargar(knightRider)})
     }
+
+    test "Ejemplo del ejercicio" {
+        camion.cargar(bumblebee)
+        assert.equals(#{bumblebee}, camion.cosas())
+        camion.cargar(knightRider)
+        assert.equals(#{knightRider, bumblebee}, camion.cosas())
+        camion.descargar(bumblebee)
+        assert.equals(#{knightRider}, camion.cosas())
+        assert.throwsException({ camion.cargar(knightRider) })
+        assert.throwsException({ camion.descargar(bumblebee) })
+    }
+}
+
+describe "Todo peso par" {
+    
+    test "Bumblebee y 50kg de arena da true" {
+        camion.cargar(bumblebee)
+        arenaAGranel.peso(50)
+        camion.cargar(arenaAGranel)
+        assert.that(camion.todoPesoPar())
+    }
+
+    test "Bumblebee y 51kg de arena da false" {
+        camion.cargar(bumblebee)
+        arenaAGranel.peso(51)
+        camion.cargar(arenaAGranel)
+        assert.notThat(camion.todoPesoPar())
+    }
 }

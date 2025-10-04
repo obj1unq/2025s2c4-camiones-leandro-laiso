@@ -5,6 +5,8 @@ object camion {
 	
 	method estaCargado(cosa) = cosas.contains(cosa)
 
+	method todoPesoPar() = cosas.all({c => c.peso().even()})
+
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
 			self.error(cosa.toString() + " ya está cargado en el camión. No se puede cargar")
