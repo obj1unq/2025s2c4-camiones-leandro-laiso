@@ -63,13 +63,13 @@ object contenedorPortuario {
 
 	method pesoCosas() = cosas.sum({c => c.peso()})
 
-	method noTieneCosas() = cosas.isEmpty()
+	method tieneCosas() = not cosas.isEmpty()
 
 	method cosaMasPeligrosa() = cosas.max({c => c.nivelPeligrosidad()})
 
 	method peso() = self.pesoCosas() + peso
 
-	method nivelPeligrosidad() = if (self.noTieneCosas()) {0} else {self.cosaMasPeligrosa().nivelPeligrosidad()}
+	method nivelPeligrosidad() = if (not self.tieneCosas()) {0} else {self.cosaMasPeligrosa().nivelPeligrosidad()}
 
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {

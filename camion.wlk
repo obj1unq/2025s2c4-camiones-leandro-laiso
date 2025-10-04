@@ -5,6 +5,8 @@ object camion {
 	const tara = 1000
 	const pesoMaximoAceptable = 2500
 	
+	method tieneCosas() = not cosas.isEmpty()
+
 	method estaCargado(cosa) = cosas.contains(cosa)
 
 	method todoPesoPar() = cosas.all({c => c.peso().even()})
@@ -35,6 +37,15 @@ object camion {
 	method puedeCircularEnRuta(nivel) = not self.estaExcedidoDePeso() && self.cosasQueSuperanNivel(nivel).isEmpty()
 
 	method tieneAlgoQuePesaEntre(minimo, maximo) = cosas.any({c =>  c.peso() >= minimo && c.peso() <= maximo})
+
+	method cosaMasPesada() {
+		return
+			if (not self.tieneCosas()) {
+				self.error("No hay nada cargado en el camión")
+			} else {
+				cosas.max({c => c.peso()})
+			}
+	}
 
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {

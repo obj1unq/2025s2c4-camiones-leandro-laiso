@@ -238,7 +238,7 @@ describe "Puede circular en ruta" {
 describe "Más cosas" {
 
     test "Contenedor portuario vacío pesa 100 y peligro 0" {
-        assert.that(contenedorPortuario.noTieneCosas())
+        assert.notThat(contenedorPortuario.tieneCosas())
         assert.equals(100, contenedorPortuario.peso())
         assert.equals(0, contenedorPortuario.nivelPeligrosidad())
     }
@@ -247,7 +247,7 @@ describe "Más cosas" {
         contenedorPortuario.cargar(knightRider)
         arenaAGranel.peso(50)
         contenedorPortuario.cargar(arenaAGranel)
-        assert.notThat(contenedorPortuario.noTieneCosas())
+        assert.that(contenedorPortuario.tieneCosas())
         assert.equals(650, contenedorPortuario.peso())
         assert.equals(10, contenedorPortuario.nivelPeligrosidad())
     }
@@ -289,5 +289,19 @@ describe "Tiene algo que pesa entre dos valores" {
 
     test "No tiene algo que pesa entre 1000 y 100 (intervalo invalido)" {
         assert.notThat(camion.tieneAlgoQuePesaEntre(1000, 100))
+    }
+}
+
+describe "Cosa mas pesada" {
+
+    test "Camión cargado con bumblebee y un paquete de 300 ladrillos. Lo más pesado es bumblebee" {
+        camion.cargar(bumblebee)
+        paqueteLadrillos.cantLadrillos(300)
+        camion.cargar(paqueteLadrillos)
+        assert.equals(bumblebee, camion.cosaMasPesada())
+    }
+
+    test "Camión vacio. No se puede calcular la cosa mas pesada" {
+        assert.throwsException({camion.cosaMasPesada()})
     }
 }
