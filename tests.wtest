@@ -234,3 +234,34 @@ describe "Puede circular en ruta" {
         assert.notThat(camion.puedeCircularEnRuta(20))
     }
 }
+
+describe "Más cosas" {
+
+    test "Contenedor portuario vacío pesa 100 y peligro 0" {
+        assert.that(contenedorPortuario.noTieneCosas())
+        assert.equals(100, contenedorPortuario.peso())
+        assert.equals(0, contenedorPortuario.nivelPeligrosidad())
+    }
+
+    test "Contenedor portuario con knightRider y 50kg de arena pesa 650 y peligro 10" {
+        contenedorPortuario.cargar(knightRider)
+        arenaAGranel.peso(50)
+        contenedorPortuario.cargar(arenaAGranel)
+        assert.notThat(contenedorPortuario.noTieneCosas())
+        assert.equals(650, contenedorPortuario.peso())
+        assert.equals(10, contenedorPortuario.nivelPeligrosidad())
+    }
+
+    test "Embalaje de seguridad que envuelve a knightRider pesa 500 y peligro 5" {
+        embalajeDeSeguridad.envolver(knightRider)
+        assert.equals(500, embalajeDeSeguridad.peso())
+        assert.equals(5, embalajeDeSeguridad.nivelPeligrosidad())
+    }
+
+    test "Embalaje de seguridad que envuelve a bumblebee (auto) pesa 800 y peligro 7,5" {
+        bumblebee.transformarEnAuto()
+        embalajeDeSeguridad.envolver(bumblebee)
+        assert.equals(800, embalajeDeSeguridad.peso())
+        assert.equals(7.5, embalajeDeSeguridad.nivelPeligrosidad())
+    }
+}

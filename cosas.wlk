@@ -54,3 +54,54 @@ object residuosRadiactivos {
 	var property peso = 1
 	method nivelPeligrosidad() = 200
 }
+
+object contenedorPortuario {
+	const cosas = #{}
+	const peso = 100
+
+	method estaCargado(cosa) = cosas.contains(cosa)
+
+	method pesoCosas() = cosas.sum({c => c.peso()})
+
+	method noTieneCosas() = cosas.isEmpty()
+
+	method cosaMasPeligrosa() = cosas.max({c => c.nivelPeligrosidad()})
+
+	method peso() = self.pesoCosas() + peso
+
+	method nivelPeligrosidad() = if (self.noTieneCosas()) {0} else {self.cosaMasPeligrosa().nivelPeligrosidad()}
+
+	method validarCargar(cosa) {
+		if (self.estaCargado(cosa)) {
+			self.error(cosa.toString() + " ya está cargado en el contenedor. No se puede cargar")
+		}
+	}
+
+	method validarDescargar(cosa) {
+		if (not self.estaCargado(cosa)) {
+			self.error(cosa.toString() + " no está cargado en el contenedor. No se puede descargar.")
+		}
+	}
+
+	method cargar(cosa) {
+		self.validarCargar(cosa)
+		cosas.add(cosa)
+	}
+
+	method descargar(cosa) {
+		self.validarDescargar(cosa)
+		cosas.remove(cosa)
+	}
+}
+
+object embalajeDeSeguridad {
+	var cosaQueEnvuelve = null
+
+	method peso() = cosaQueEnvuelve.peso()
+
+	method nivelPeligrosidad() = cosaQueEnvuelve.nivelPeligrosidad() / 2
+
+	method envolver(cosa) {
+		cosaQueEnvuelve = cosa
+	}
+}
