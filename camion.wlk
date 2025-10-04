@@ -15,7 +15,18 @@ object camion {
 
 	method pesoTotal() = tara + self.pesoTotalCarga()
 
-	method estaExcedidoDePeso() = self.pesoTotal() > pesoMaximoAceptable 
+	method estaExcedidoDePeso() = self.pesoTotal() > pesoMaximoAceptable
+
+	method hayAlgoDeNivel(nivel) = cosas.any({c => c.nivelPeligrosidad() == nivel})
+
+	method cosaDeNivel(nivel) {
+		return
+			if (self.hayAlgoDeNivel(nivel)) {
+				cosas.find({c => c.nivelPeligrosidad() == nivel})
+			} else {
+				self.error("No hay nada cargado de nivel " + nivel.toString())
+			}
+	}
 
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {

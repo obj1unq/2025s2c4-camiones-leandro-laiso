@@ -140,3 +140,41 @@ describe "Peso y exceso de peso" {
         assert.notThat(camion.estaExcedidoDePeso())
     }
 }
+
+describe "El de nivel..." {
+
+    // Bumblebee en modo auto, bateria antiaerea descargada y residuos radiactivos.
+    method initialize() {
+        bumblebee.transformarEnAuto()
+        camion.cargar(bumblebee)
+        bateriaAntiaerea.descargarMisiles()
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(residuosRadiactivos)
+    }
+
+    test "Si le pido nivel 0, encuentra bateriaAntiaerea" {
+        assert.equals(bateriaAntiaerea, camion.cosaDeNivel(0))
+    }
+
+    test "Si le pido nivel 15, encuentra bumblebee" {
+        assert.equals(bumblebee, camion.cosaDeNivel(15))
+    }
+
+    test "Si le pido nivel 200, encuentra residuos" {
+        assert.equals(residuosRadiactivos, camion.cosaDeNivel(200))
+    }
+
+    test "Si le pido nivel 30, no encuentra nada (error)" {
+        assert.throwsException({camion.cosaDeNivel(30)})
+    }
+
+    test "Cambio bumblebee a robot. Si le pido nivel 30, encuentra bumblebee" {
+        bumblebee.transformarEnRobot()
+        assert.equals(bumblebee, camion.cosaDeNivel(30))
+    }
+
+    test "Cargo bateriaAntiaerea con misiles. Si le pido nivel 100, encuentra bateriaAntiaerea" {
+        bateriaAntiaerea.cargarMisiles()
+        assert.equals(bateriaAntiaerea, camion.cosaDeNivel(100))
+    }
+}
