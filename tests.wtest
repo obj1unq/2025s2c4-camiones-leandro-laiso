@@ -305,3 +305,13 @@ describe "Cosa mas pesada" {
         assert.throwsException({camion.cosaMasPesada()})
     }
 }
+
+describe "Pesos" {
+    
+    test "Camion cargado con bumblebee y 300 ladrillos" {
+        camion.cargar(bumblebee)
+        paqueteLadrillos.cantLadrillos(300)
+        camion.cargar(paqueteLadrillos)
+        assert.equals([800, 600], camion.pesos())
+    }
+}
