@@ -1,11 +1,13 @@
 object knightRider {
 	method peso() = 500
 	method nivelPeligrosidad() = 10
+	method bultos() = 1
 }
 
 object arenaAGranel {
 	var property peso = 1 
 	method nivelPeligrosidad() = 1
+	method bultos() = 1
 }
 
 object bumblebee {
@@ -13,6 +15,7 @@ object bumblebee {
 
 	method peso() = 800
 	method nivelPeligrosidad() = if (transformadoEnAuto) {15} else {30}
+	method bultos() = 2
 
 	method transformarEnAuto() {
 		transformadoEnAuto = true
@@ -33,6 +36,17 @@ object paqueteLadrillos {
 
 	method peso() = pesoPorLadrillo * cantLadrillos
 	method nivelPeligrosidad() = 2
+
+	method bultos() {
+		return
+			if (cantLadrillos <= 100) {
+				1
+			} else if (cantLadrillos <= 300) {
+				2
+			} else {
+				3
+			}
+	}
 }
 
 object bateriaAntiaerea {
@@ -40,6 +54,7 @@ object bateriaAntiaerea {
 
 	method peso() = if (tieneMisiles) {300} else {200}
 	method nivelPeligrosidad() = if (tieneMisiles) {100} else {0}
+	method bultos() = if (tieneMisiles) {2} else {1}
 
 	method cargarMisiles() {
 		tieneMisiles = true
@@ -53,11 +68,13 @@ object bateriaAntiaerea {
 object residuosRadiactivos {
 	var property peso = 1
 	method nivelPeligrosidad() = 200
+	method bultos() = 1
 }
 
 object contenedorPortuario {
 	const cosas = #{}
-	const peso = 100
+	const pesoBase = 100
+	const bultoPropio = 1
 
 	method estaCargado(cosa) = cosas.contains(cosa)
 
@@ -67,7 +84,11 @@ object contenedorPortuario {
 
 	method cosaMasPeligrosa() = cosas.max({c => c.nivelPeligrosidad()})
 
-	method peso() = self.pesoCosas() + peso
+	method peso() = self.pesoCosas() + pesoBase
+
+	method bultosDeCosas() = cosas.sum({c => c.bultos()})
+
+	method bultos() = self.bultosDeCosas() + bultoPropio
 
 	method nivelPeligrosidad() = if (not self.tieneCosas()) {0} else {self.cosaMasPeligrosa().nivelPeligrosidad()}
 
@@ -100,6 +121,8 @@ object embalajeDeSeguridad {
 	method peso() = cosaQueEnvuelve.peso()
 
 	method nivelPeligrosidad() = cosaQueEnvuelve.nivelPeligrosidad() / 2
+
+	method bultos() = 2
 
 	method envolver(cosa) {
 		cosaQueEnvuelve = cosa

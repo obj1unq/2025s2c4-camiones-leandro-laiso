@@ -49,6 +49,8 @@ object camion {
 
 	method pesos() = cosas.map({c => c.peso()})
 
+	method totalBultos() = cosas.sum({c => c.bultos()}) 
+
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
 			self.error(cosa.toString() + " ya está cargado en el camión. No se puede cargar")

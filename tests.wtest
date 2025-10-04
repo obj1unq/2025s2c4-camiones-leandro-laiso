@@ -315,3 +315,36 @@ describe "Pesos" {
         assert.equals([800, 600], camion.pesos())
     }
 }
+
+describe "TotalBultos" {
+
+    test "Bultos: Caso 1" {
+        contenedorPortuario.cargar(knightRider)
+        contenedorPortuario.cargar(bumblebee)
+        embalajeDeSeguridad.envolver(residuosRadiactivos)
+        paqueteLadrillos.cantLadrillos(50)
+        bateriaAntiaerea.descargarMisiles()
+        camion.cargar(contenedorPortuario)
+        camion.cargar(embalajeDeSeguridad)
+        camion.cargar(arenaAGranel)
+        camion.cargar(paqueteLadrillos)
+        camion.cargar(bateriaAntiaerea)
+        assert.equals(9, camion.totalBultos())
+    }
+
+    test "Bultos: Caso 2" {
+        paqueteLadrillos.cantLadrillos(150)
+        bateriaAntiaerea.cargarMisiles()
+        camion.cargar(paqueteLadrillos)
+        camion.cargar(bateriaAntiaerea)
+        camion.cargar(contenedorPortuario)
+        assert.equals(5, camion.totalBultos())
+    }
+
+    test "Bultos: Caso 3" {
+        paqueteLadrillos.cantLadrillos(350)
+        camion.cargar(paqueteLadrillos)
+        camion.cargar(arenaAGranel)
+        assert.equals(4, camion.totalBultos())
+    }
+}
