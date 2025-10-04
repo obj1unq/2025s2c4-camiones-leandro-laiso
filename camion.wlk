@@ -32,6 +32,8 @@ object camion {
 
 	method cosasMasPeligrosasQue(cosa) = self.cosasQueSuperanNivel(cosa.nivelPeligrosidad())
 
+	method puedeCircularEnRuta(nivel) = not self.estaExcedidoDePeso() && self.cosasQueSuperanNivel(nivel).isEmpty()
+
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
 			self.error(cosa.toString() + " ya está cargado en el camión. No se puede cargar")
