@@ -9,16 +9,48 @@ object arenaAGranel {
 }
 
 object bumblebee {
-	var estaTransformadoEnAuto = false
+	var transformadoEnAuto = false
 
 	method peso() = 800
-	method nivelPeligrosidad() = if (estaTransformadoEnAuto) {15} else {30}
+	method nivelPeligrosidad() = if (transformadoEnAuto) {15} else {30}
 
 	method transformarEnAuto() {
-		estaTransformadoEnAuto = true
+		transformadoEnAuto = true
 	}
 
 	method transformarEnRobot() {
-		estaTransformadoEnAuto = false
+		transformadoEnAuto = false
 	}
+}
+
+object paqueteLadrillos {
+	const pesoPorLadrillo = 2
+	var cantLadrillos = 1
+
+	method cantLadrillos(_cantLadrillos) {
+		cantLadrillos = _cantLadrillos
+	}
+
+	method peso() = pesoPorLadrillo * cantLadrillos
+	method nivelPeligrosidad() = 2
+}
+
+object bateriaAntiaerea {
+	var tieneMisiles = false
+
+	method peso() = if (tieneMisiles) {300} else {200}
+	method nivelPeligrosidad() = if (tieneMisiles) {100} else {0}
+
+	method cargarMisiles() {
+		tieneMisiles = true
+	}
+
+	method descargarMisiles() {
+		tieneMisiles = false
+	}
+}
+
+object residuosRadiactivos {
+	var property peso = 1
+	method nivelPeligrosidad() = 200
 }

@@ -1,0 +1,81 @@
+import camion.*
+import cosas.*
+
+describe "Cosas" {
+
+    test "knightRider" {
+        assert.equals(500, knightRider.peso())
+        assert.equals(10, knightRider.nivelPeligrosidad())
+    }
+
+    test "arenaAGranel" {
+        arenaAGranel.peso(50)
+        assert.equals(50, arenaAGranel.peso())
+        assert.equals(1, arenaAGranel.nivelPeligrosidad())
+    }
+
+    test "bumblebee (auto)" {
+        bumblebee.transformarEnAuto()
+        assert.equals(800, bumblebee.peso())
+        assert.equals(15, bumblebee.nivelPeligrosidad())
+    }
+
+    test "bumblebee (robot)" {
+        bumblebee.transformarEnRobot()
+        assert.equals(800, bumblebee.peso())
+        assert.equals(30, bumblebee.nivelPeligrosidad())
+    }
+
+    test "paqueteLadrillos (10 ladrillos)" {
+        paqueteLadrillos.cantLadrillos(10)
+        assert.equals(20, paqueteLadrillos.peso())
+        assert.equals(2, paqueteLadrillos.nivelPeligrosidad())
+    }
+
+    test "paqueteLadrillos (598 ladrillos)" {
+        paqueteLadrillos.cantLadrillos(598)
+        assert.equals(1196, paqueteLadrillos.peso())
+        assert.equals(2, paqueteLadrillos.nivelPeligrosidad())
+    }
+
+    test "bateriaAntiaerea (sin Misiles)" {
+        bateriaAntiaerea.descargarMisiles()
+        assert.equals(200, bateriaAntiaerea.peso())
+        assert.equals(0, bateriaAntiaerea.nivelPeligrosidad())
+    }
+
+    test "bateriaAntiaerea (con Misiles)" {
+        bateriaAntiaerea.cargarMisiles()
+        assert.equals(300, bateriaAntiaerea.peso())
+        assert.equals(100, bateriaAntiaerea.nivelPeligrosidad())
+    }
+
+    test "residuosRadiactivos" {
+        residuosRadiactivos.peso(5015)
+        assert.equals(5015, residuosRadiactivos.peso())
+        assert.equals(200, residuosRadiactivos.nivelPeligrosidad())
+    }
+}
+
+describe "Carga y descarga" {
+
+    test "Cargar una cosa y ver si está cargada" {
+        camion.cargar(knightRider)
+        assert.that(camion.estaCargado(knightRider))
+    }
+
+    test "Descargar una cosa y ver que no siga cargada" {
+        camion.cargar(knightRider)
+        camion.descargar(knightRider)
+        assert.notThat(camion.estaCargado(knightRider))
+    }
+
+    test "No se puede cargar algo ya cargado" {
+        camion.cargar(knightRider)
+        assert.throwsException({camion.cargar(knightRider)})
+    }
+
+    test "No se puede descargar algo no cargado" {
+        assert.throwsException({camion.descargar(knightRider)})
+    }
+}
