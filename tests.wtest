@@ -107,3 +107,24 @@ describe "Todo peso par" {
         assert.notThat(camion.todoPesoPar())
     }
 }
+
+describe "Hay alguno que pesa..." {
+    
+    method initialize() {
+        camion.cargar(bumblebee)
+        arenaAGranel.peso(50)
+        camion.cargar(arenaAGranel)
+    }
+
+    test "Preguntar si hay algo de 50 da true" {
+        assert.that(camion.hayAlgoQuePesa(50))
+    }
+
+    test "Preguntar si hay algo de 800 da true" {
+        assert.that(camion.hayAlgoQuePesa(800))
+    }
+
+    test "Preguntar si hay algo de 500 da false" {
+        assert.notThat(camion.hayAlgoQuePesa(500))
+    }
+}
