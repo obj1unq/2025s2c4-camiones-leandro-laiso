@@ -128,3 +128,15 @@ describe "Hay alguno que pesa..." {
         assert.notThat(camion.hayAlgoQuePesa(500))
     }
 }
+
+describe "Peso y exceso de peso" {
+
+    test "Con bumblebee y 300 ladrillos, pesa 2400 y no está excedido" {
+        camion.cargar(bumblebee)
+        paqueteLadrillos.cantLadrillos(300)
+        camion.cargar(paqueteLadrillos)
+        assert.equals(2400, camion.pesoTotal())
+        assert.equals(1400, camion.pesoTotalCarga())
+        assert.notThat(camion.estaExcedidoDePeso())
+    }
+}

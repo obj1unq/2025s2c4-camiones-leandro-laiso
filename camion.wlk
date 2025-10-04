@@ -2,12 +2,20 @@ import cosas.*
 
 object camion {
 	const property cosas = #{}
+	const tara = 1000
+	const pesoMaximoAceptable = 2500
 	
 	method estaCargado(cosa) = cosas.contains(cosa)
 
 	method todoPesoPar() = cosas.all({c => c.peso().even()})
 
 	method hayAlgoQuePesa(peso) = cosas.any({c => c.peso() == peso})
+
+	method pesoTotalCarga() = cosas.sum({c => c.peso()})
+
+	method pesoTotal() = tara + self.pesoTotalCarga()
+
+	method estaExcedidoDePeso() = self.pesoTotal() > pesoMaximoAceptable 
 
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
