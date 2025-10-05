@@ -2,20 +2,38 @@ object knightRider {
 	method peso() = 500
 	method nivelPeligrosidad() = 10
 	method bultos() = 1
+
+	method accidentarse() {
+
+	}
 }
 
 object arenaAGranel {
 	var property peso = 1 
 	method nivelPeligrosidad() = 1
 	method bultos() = 1
+
+	method accidentarse() {
+		peso += 20
+	}
 }
 
 object bumblebee {
 	var transformadoEnAuto = false
 
+	method transformadoEnAuto() = transformadoEnAuto
+
 	method peso() = 800
 	method nivelPeligrosidad() = if (transformadoEnAuto) {15} else {30}
 	method bultos() = 2
+
+	method accidentarse() {
+		if (transformadoEnAuto) {
+			self.transformarEnRobot()
+		} else {
+			self.transformarEnAuto()
+		}
+	}
 
 	method transformarEnAuto() {
 		transformadoEnAuto = true
@@ -28,14 +46,15 @@ object bumblebee {
 
 object paqueteLadrillos {
 	const pesoPorLadrillo = 2
-	var cantLadrillos = 1
-
-	method cantLadrillos(_cantLadrillos) {
-		cantLadrillos = _cantLadrillos
-	}
+	var property cantLadrillos = 1
+	const ladrillosQuePierdePorAccidente = 12
 
 	method peso() = pesoPorLadrillo * cantLadrillos
 	method nivelPeligrosidad() = 2
+
+	method accidentarse() {
+		cantLadrillos = 0.max(cantLadrillos - ladrillosQuePierdePorAccidente)
+	}
 
 	method bultos() {
 		return
@@ -52,9 +71,15 @@ object paqueteLadrillos {
 object bateriaAntiaerea {
 	var tieneMisiles = false
 
+	method estaCargada() = tieneMisiles
+
 	method peso() = if (tieneMisiles) {300} else {200}
 	method nivelPeligrosidad() = if (tieneMisiles) {100} else {0}
 	method bultos() = if (tieneMisiles) {2} else {1}
+
+	method accidentarse() {
+		self.descargarMisiles()
+	}
 
 	method cargarMisiles() {
 		tieneMisiles = true
@@ -69,6 +94,10 @@ object residuosRadiactivos {
 	var property peso = 1
 	method nivelPeligrosidad() = 200
 	method bultos() = 1
+
+	method accidentarse() {
+		peso += 15
+	}
 }
 
 object contenedorPortuario {
@@ -91,6 +120,10 @@ object contenedorPortuario {
 	method bultos() = self.bultosDeCosas() + bultoPropio
 
 	method nivelPeligrosidad() = if (not self.tieneCosas()) {0} else {self.cosaMasPeligrosa().nivelPeligrosidad()}
+
+	method accidentarse() {
+		cosas.forEach({c => c.accidentarse()})
+	}
 
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
@@ -123,6 +156,10 @@ object embalajeDeSeguridad {
 	method nivelPeligrosidad() = cosaQueEnvuelve.nivelPeligrosidad() / 2
 
 	method bultos() = 2
+
+	method accidentarse() {
+
+	}
 
 	method envolver(cosa) {
 		cosaQueEnvuelve = cosa

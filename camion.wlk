@@ -49,7 +49,11 @@ object camion {
 
 	method pesos() = cosas.map({c => c.peso()})
 
-	method totalBultos() = cosas.sum({c => c.bultos()}) 
+	method totalBultos() = cosas.sum({c => c.bultos()})
+
+	method accidentarse() {
+		cosas.forEach({c => c.accidentarse()})
+	}
 
 	method validarCargar(cosa) {
 		if (self.estaCargado(cosa)) {
