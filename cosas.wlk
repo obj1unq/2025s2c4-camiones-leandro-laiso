@@ -105,8 +105,6 @@ object contenedorPortuario {
 	const pesoBase = 100
 	const bultoPropio = 1
 
-	method estaCargado(cosa) = cosas.contains(cosa)
-
 	method pesoCosas() = cosas.sum({c => c.peso()})
 
 	method tieneCosas() = not cosas.isEmpty()
@@ -125,26 +123,8 @@ object contenedorPortuario {
 		cosas.forEach({c => c.accidentarse()})
 	}
 
-	method validarCargar(cosa) {
-		if (self.estaCargado(cosa)) {
-			self.error(cosa.toString() + " ya está cargado en el contenedor. No se puede cargar")
-		}
-	}
-
-	method validarDescargar(cosa) {
-		if (not self.estaCargado(cosa)) {
-			self.error(cosa.toString() + " no está cargado en el contenedor. No se puede descargar.")
-		}
-	}
-
 	method cargar(cosa) {
-		self.validarCargar(cosa)
 		cosas.add(cosa)
-	}
-
-	method descargar(cosa) {
-		self.validarDescargar(cosa)
-		cosas.remove(cosa)
 	}
 }
 

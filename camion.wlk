@@ -1,4 +1,6 @@
 import cosas.*
+import almacen.*
+import caminos.*
 
 object camion {
 	const property cosas = #{}
@@ -51,8 +53,26 @@ object camion {
 
 	method totalBultos() = cosas.sum({c => c.bultos()})
 
+	method puedeViajar(camino) = camino.puedeTransportar(self)
+
 	method accidentarse() {
 		cosas.forEach({c => c.accidentarse()})
+	}
+
+	method validarTransportar(camino) {
+		if (not self.puedeViajar(camino)) {
+			self.error("El camión no puede viajar por el camino elegido: " + camino.toString())
+		}
+	}
+
+	method vaciarEnDestino(destino) {
+		destino.almacenar(cosas)
+		cosas.clear()
+	}
+
+	method transportar(destino, camino) {
+		self.validarTransportar(camino)
+		self.vaciarEnDestino(destino)
 	}
 
 	method validarCargar(cosa) {
